@@ -1,0 +1,8 @@
+datasets/images/*
+*.pyc
+lib/config/__pycache__/
+lib/models/__pycache__/
+lib/utils/__pycache__/
+s.rar
+*.pth
+datasets/scsd/train.txt
