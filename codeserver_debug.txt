@@ -1,0 +1,62 @@
+
+Bind F10 to Step-over:
+https://github.com/cdr/code-server/issues/2079
+
+Hello, I found a solution
+
+Go to File/Preferences/Keyboard Shortcuts.
+Click on 'Open Keyboard Shortcuts (JSON)' icon.
+Paste the next code:
+[
+    {
+        "key": "f10",
+        "command": "-workbench.actions.menubar.focus",
+        "when": "isWeb"
+    },
+    {
+        "key": "f10",
+        "command": "",
+        "when": "isWeb"
+    },
+    {
+        "key": "f10",
+        "command": "extension.node-debug.startWithStopOnEntry",
+        "when": "!inDebugMode && debugConfigurationType == 'node'"
+    },
+    {
+        "key": "f10",
+        "command": "workbench.action.debug.stepOver",
+        "when": "debugState == 'stopped'"
+    }
+
+]
+Press F5 to refresh the browser
+
+
+==================  Launch.Json =====================
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd":"${workspaceFolder}/ocr1",
+            "args":["--image_path","images/test.png", "--checkpoint", "output/checkpoints/a.pth"]
+        }
+    ]
+}
+
+
+
+// for train
+// "args":["--cfg","lib/config/360CC_config.yaml"] 
+
+// for demo
+// "args":["--image_path","images/test.png", "--checkpoint", "output/checkpoints/a.pth"]
+//!python demo.py --image_path images/test.png --checkpoint output/checkpoints/a.pth 
+
+
+

@@ -28,7 +28,6 @@ class CRNN(nn.Module):
         ps = [1, 1, 1, 1, 1, 1, 0]
         ss = [1, 1, 1, 1, 1, 1, 1]
         nm = [64, 128, 256, 256, 512, 512, 512]
-
         cnn = nn.Sequential()
 
         def convRelu(i, batchNormalization=False):
@@ -64,7 +63,6 @@ class CRNN(nn.Module):
             BidirectionalLSTM(nh, nh, nclass))
 
     def forward(self, input):
-
         # conv features
         conv = self.cnn(input)
         b, c, h, w = conv.size()
@@ -72,7 +70,6 @@ class CRNN(nn.Module):
         conv = conv.squeeze(2) # b *512 * width
         conv = conv.permute(2, 0, 1)  # [w, b, c]
         output = F.log_softmax(self.rnn(conv), dim=2)
-
         return output
 
 def weights_init(m):
