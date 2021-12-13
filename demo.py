@@ -88,3 +88,6 @@ if __name__ == '__main__':
     finished = time.time()
     print('elapsed time: {0}'.format(finished - started))
 
+# python demo.py --image_path images/test_pt1.PNG --checkpoint output/checkpoints/a.pth
+
+# python demo.py --image_path images/test_hw1.PNG --checkpoint output/checkpoints/a.pth
