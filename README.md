@@ -1,21 +1,26 @@
 # Characters Recognition
 
-A Chinese characters recognition repository based on convolutional recurrent networks. 
+A Chinese characters recognition prototype based on convolutional recurrent networks. 
 
 ## Performance
 
 #### Recognize characters in pictures
 
 <p align='center'>
-<img src='images/demo.png' title='example' style='max-width:600px'></img>
+<img src='images/UBGfuF.png' title='example' style='max-width:600px'></img>
 </p>
+
+
+
+
 <p align='center'>
-<img src='images/demo_2.jpg' title='example2' style='max-width:600px'></img>
+<img src='images/v2-
+4e6cd0728d9f84eca08e962daf7603c3_720w.png' title='example2' style='max-width:600px'></img>
 </p>
 
 ## Dev Environments
-1. WIN 10 or Ubuntu 16.04
-2. **PyTorch 1.2.0 (may fix ctc loss)** with cuda 10.0 🔥
+1. Ubuntu 20.04
+2. **PyTorch 1.10** with cuda 11.1 
 3. yaml
 4. easydict
 5. tensorboardX
@@ -40,7 +45,7 @@ A Chinese characters recognition repository based on convolutional recurrent net
     20457281_3395886438.jpg 120 1061 2 376 78 249 272 272 120 1061
     ...
 ```
-#### Or your own data
+#### Or your other data
 1. Edit **lib/config/OWN_config.yaml** DATA:ROOT to you image path
 ```angular2html
     DATASET:
@@ -50,10 +55,10 @@ A Chinese characters recognition repository based on convolutional recurrent net
 
     eg. test_own.txt
 ```
-    20456343_4045240981.jpg 你好啊！祖国！
+    20456343_4045240981.jpg 你好啊！世界！
     20457281_3395886438.jpg 晚安啊！世界！
     ...
-```
+``` 
 **note**: fixed-length training is supported. yet you can modify dataloader to support random length training.   
 
 ## Train
@@ -79,11 +84,11 @@ or [run] python train.py --cfg lib/config/OWN_config.yaml
 
 ## Demo
 ```angular2html
-   [run] python demo.py --image_path images/test.png --checkpoints output/checkpoints/mixed_second_finetune_acc_97P7.pth
+   [run] python demo.py --image_path images/test.png --checkpoints output/checkpoints/a.pth
 ```
 ## References
+- https://arxiv.org/pdf/1507.05717v1.pdf
+- https://www.cs.toronto.edu/~graves/icml_2006.pdf
 - https://github.com/meijieru/crnn.pytorch
-- https://github.com/HRNet
-
-
-
+- https://github.com/xiaofengShi/CHINESE-OCR
+- http://xiaofengshi.com/2019/01/05/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-OCR_Overview/
