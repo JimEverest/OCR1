@@ -19,6 +19,15 @@ class BidirectionalLSTM(nn.Module):
 
         return output
 
+class Prt(nn.Module):
+    def __init__(self,alias="ptr"):
+        super(Prt, self).__init__()
+        self.alias=alias
+
+    def forward(self, x):
+        print(self.alias,": ",x.shape)
+        return x
+        
 class CRNN(nn.Module):
     def __init__(self, imgH, nc, nclass, nh, n_rnn=2, leakyRelu=False):
         super(CRNN, self).__init__()
@@ -33,28 +42,34 @@ class CRNN(nn.Module):
         def convRelu(i, batchNormalization=False):
             nIn = nc if i == 0 else nm[i - 1]
             nOut = nm[i]
-            cnn.add_module('conv{0}'.format(i),
-                           nn.Conv2d(nIn, nOut, ks[i], ss[i], ps[i]))
+            cnn.add_module('ptr_raw',  Prt('raw'))
+            cnn.add_module('conv{0}'.format(i),  nn.Conv2d(nIn, nOut, ks[i], ss[i], ps[i]))
+            conv_name='conv'+str(i)+'-1--I:' + str(nIn) +"_O:" + str(nOut) +"_k:" + str(ks[i]) +"_s:" +str(ss[i])+"_p:" +str(ps[i])
+            ptr_mod=Prt(conv_name)
+            #Prt( conv_name + str(nIn) +"_o" + str(nOut) +"_k" + str(ks[i]) +"_s" + +str(ss[i])+"_p" +str(ps[i]) )
+            cnn.add_module('ptr{0}-1'.format(i), ptr_mod)
+
             if batchNormalization:
                 cnn.add_module('batchnorm{0}'.format(i), nn.BatchNorm2d(nOut))
             if leakyRelu:
-                cnn.add_module('relu{0}'.format(i),
-                               nn.LeakyReLU(0.2, inplace=True))
+                cnn.add_module('relu{0}'.format(i), nn.LeakyReLU(0.2, inplace=True))
             else:
                 cnn.add_module('relu{0}'.format(i), nn.ReLU(True))
-
+            cnn.add_module('ptr_relu',  Prt('relu'))
         convRelu(0)
         cnn.add_module('pooling{0}'.format(0), nn.MaxPool2d(2, 2))  # 64x16x64
+        cnn.add_module('ptr_pooling{0}-1'.format(0),  Prt('pooling{0}-1'.format(0)))
         convRelu(1)
         cnn.add_module('pooling{0}'.format(1), nn.MaxPool2d(2, 2))  # 128x8x32
-        convRelu(2, True)
+        cnn.add_module('ptr_pooling{0}-1'.format(1),  Prt('pooling{0}-1'.format(1)))
+        convRelu(2, True) 
         convRelu(3)
         cnn.add_module('pooling{0}'.format(2), nn.MaxPool2d((2, 2), (2, 1), (0, 1)))  # 256x4x16
-
+        cnn.add_module('ptr_pooling{0}-1'.format(2),  Prt('pooling{0}-1'.format(2)))
         convRelu(4, True)
         convRelu(5)
         cnn.add_module('pooling{0}'.format(3),nn.MaxPool2d((2, 2), (2, 1), (0, 1)))  # 512x2x16
-        
+        cnn.add_module('ptr_pooling{0}-1'.format(3),  Prt('pooling{0}-1'.format(3)))
         convRelu(6, True)  # 512x1x16
 
         self.cnn = cnn

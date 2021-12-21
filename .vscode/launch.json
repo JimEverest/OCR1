@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-			"cwd": "${workspaceFolder}/ocr1/",
+			"cwd": "${workspaceFolder}/",
 			"args":["--image_path","images/test.png", "--checkpoint", "output/checkpoints/a.pth"]
         }
     ]
