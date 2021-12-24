@@ -91,4 +91,6 @@ or [run] python train.py --cfg lib/config/OWN_config.yaml
 - https://www.cs.toronto.edu/~graves/icml_2006.pdf
 - https://github.com/meijieru/crnn.pytorch
 - https://github.com/xiaofengShi/CHINESE-OCR
+- https://cxyzjd.com/article/dbdxwyl/110449240
+- https://blog.csdn.net/dbdxwyl/article/details/110449240
 - http://xiaofengshi.com/2019/01/05/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-OCR_Overview/
