@@ -8,7 +8,11 @@
             "program": "${file}",
             "console": "integratedTerminal",
 			"cwd": "${workspaceFolder}/",
-			"args":["--image_path","images/test.png", "--checkpoint", "output/checkpoints/a.pth"]
+            "args":["--cfg","lib/config/OWN_config.yaml"] 
         }
-    ]
+    ],
+    "__comment":{
+        "args—demo": ["--image_path","images/test.png", "--checkpoint", "output/checkpoints/a.pth"],
+        "args-train":["--cfg","lib/config/360CC_config.yaml"] 
+    }
 }

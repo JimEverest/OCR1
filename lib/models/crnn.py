@@ -25,7 +25,7 @@ class Prt(nn.Module):
         self.alias=alias
 
     def forward(self, x):
-        print(self.alias,": ",x.shape)
+        # print(self.alias,": ",x.shape)
         return x
         
 class CRNN(nn.Module):

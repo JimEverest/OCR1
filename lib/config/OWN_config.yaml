@@ -12,8 +12,8 @@ CUDNN:
 
 DATASET:
   DATASET: OWN
-  ROOT: "H:/DL-DATASET/360M/images"
-  JSON_FILE: {'train': 'lib/dataset/txt/train_own.txt', 'val': 'lib/dataset/txt/test_own.txt'}
+  ROOT: "datasets/images"
+  JSON_FILE: {'train': 'datasets/train.txt', 'val': 'datasets/test.txt'}
   SCALE_FACTOR: 0.25
   ROT_FACTOR: 30
   STD: 0.193
@@ -39,7 +39,7 @@ TRAIN:
   RMSPROP_CENTERED:
   FINETUNE:
     IS_FINETUNE: true
-    FINETUNE_CHECKPOINIT: 'output/checkpoints/mixed_second_finetune_acc_97P7.pth'
+    FINETUNE_CHECKPOINIT: 'output/checkpoints/a.pth'
     FREEZE: true
 
 TEST:

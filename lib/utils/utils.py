@@ -3,6 +3,12 @@ import time
 from pathlib import Path
 import os
 import torch
+unexp_char_file_path = "./new.txt"
+
+def write_row(unexp_char_file_path, un_char):
+    with open(unexp_char_file_path, 'a') as file:
+        file.write(un_char+"\n")
+
 
 def get_optimizer(config, model):
 
@@ -106,7 +112,12 @@ class strLabelConverter(object):
                 item = item.decode('utf-8','strict')
             length.append(len(item))
             for char in item:
-                index = self.dict[char]
+                try:
+                    index = self.dict[char]
+                except:
+                    index=6042
+                    print(char,"unexpected char captured, not found in Alphabet DICT.")
+                    write_row(unexp_char_file_path, char)
                 result.append(index)
         text = result
         return (torch.IntTensor(text), torch.IntTensor(length))
