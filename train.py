@@ -14,15 +14,11 @@ from lib.utils.utils import model_info
 
 from tensorboardX import SummaryWriter
 
-
 def parse_arg():
     parser = argparse.ArgumentParser(description="train crnn")
-
-    parser.add_argument(
-        '--cfg', help='experiment configuration filename', required=True, type=str)
+    parser.add_argument('--cfg', help='experiment configuration filename', required=True, type=str)
 
     args = parser.parse_args()
-
     with open(args.cfg, 'r') as f:
         # config = yaml.load(f, Loader=yaml.FullLoader)
         config = yaml.load(f)
@@ -30,33 +26,26 @@ def parse_arg():
 
     config.DATASET.ALPHABETS = alphabets.alphabet
     config.MODEL.NUM_CLASSES = len(config.DATASET.ALPHABETS)
-
     return config
 
 
 def main():
-
     # load config
     config = parse_arg()
-
     # create output folder
     output_dict = utils.create_log_folder(config, phase='train')
-
     # cudnn
     cudnn.benchmark = config.CUDNN.BENCHMARK
     cudnn.deterministic = config.CUDNN.DETERMINISTIC
     cudnn.enabled = config.CUDNN.ENABLED
-
     # writer dict
     writer_dict = {
         'writer': SummaryWriter(log_dir=output_dict['tb_dir']),
         'train_global_steps': 0,
         'valid_global_steps': 0,
     }
-
     # construct face related neural networks
     model = crnn.get_crnn(config)
-
     # get device
     if torch.cuda.is_available():
         device = torch.device("cuda:{}".format(config.GPUID))
@@ -64,7 +53,6 @@ def main():
         device = torch.device("cpu:0")
 
     model = model.to(device)
-
     # define loss function
     criterion = torch.nn.CTCLoss()
 
@@ -98,17 +86,16 @@ def main():
         if config.TRAIN.FINETUNE.FREEZE:
             for p in model.cnn.parameters():
                 p.requires_grad = False
-
     elif config.TRAIN.RESUME.IS_RESUME:
         model_state_file = config.TRAIN.RESUME.FILE
         if model_state_file == '':
             print(" => no checkpoint found")
         checkpoint = torch.load(model_state_file, map_location='cpu')
         if 'state_dict' in checkpoint.keys():
-            model.load_state_dict(checkpoint['state_dict'])
-            last_epoch = checkpoint['epoch']
             # optimizer.load_state_dict(checkpoint['optimizer'])
             # lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
+            model.load_state_dict(checkpoint['state_dict'])
+            last_epoch = checkpoint['epoch']
         else:
             model.load_state_dict(checkpoint)
 
@@ -160,7 +147,5 @@ def main():
 
     writer_dict['writer'].close()
 
-
 if __name__ == '__main__':
-
     main()
