@@ -4,6 +4,7 @@ from pathlib import Path
 import os
 import torch
 unexp_char_file_path = "./new.txt"
+unseen=[]
 
 def write_row(unexp_char_file_path, un_char):
     with open(unexp_char_file_path, 'a') as file:
@@ -116,8 +117,9 @@ class strLabelConverter(object):
                     index = self.dict[char]
                 except:
                     index=6042
-                    print(char,"unexpected char captured, not found in Alphabet DICT.")
-                    write_row(unexp_char_file_path, char)
+                    if char in unseen:
+                        print(char,"unexpected char captured, not found in Alphabet DICT.")
+                        write_row(unexp_char_file_path, char)
                 result.append(index)
         text = result
         return (torch.IntTensor(text), torch.IntTensor(length))
