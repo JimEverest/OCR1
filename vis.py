@@ -32,7 +32,6 @@ def readLabel_TXT_byName(Name, filePath="PaddleOCR/rec_data_lesson_demo/train.tx
         split_string = msg.split(" ",1)
         return split_string[0],split_string[1]
 
-
 def readLabel_TXT_byID(filePath="PaddleOCR/rec_data_lesson_demo/train.txt",lineID=0):
     fp = open(filePath)
     msg=""
@@ -72,7 +71,6 @@ def getLineNum(lbl):
   file.close()
   return(line_count)
 
-
 def text(img, js,idx=0):
   txt = js
   tup_pt=(0,10)
@@ -80,7 +78,6 @@ def text(img, js,idx=0):
   os.makedirs("./temp", exist_ok=True)
   cv2.imwrite('./temp/temp'+str(idx)+'.jpg', img)
   return img
-
 
 def get_lbl_from_parent_lbl(img_name, root=0):
     # img_name ---> "000001.jpg"
@@ -176,17 +173,18 @@ def showImgs_code(imgs,lbls=None, r=6,c=4, savefile_name = "zamples"):
 
 
 
-def showImg(img):
+def showImg(img,gt=False):
     if(isinstance(img, str)):
         if os.path.isfile(img):
-            loadImg(fName=img)
+            imgs = [loadImg(fName=img)]
         if os.path.isdir(img):
             # random select
-            pass
-    img = loadImg(img)
+            imgs,_gt = random_sample_folder(img,num=1,gt=gt)
+    # img = loadImg(img)
     # figure = plt.figure(figsize = (cols*3,rows*1))
-    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    plt.show()
+    showImgs_code(imgs = imgs, r=1,c=1)
+    # plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    # plt.show()
 
 #endregion
 
@@ -205,6 +203,16 @@ def showImg(img):
 # print (x[0])
 
 
-imgs,gts = random_sample_GT(lbl="/home/jim/AI/ocr1/labels1.txt")
-showImgs_code(imgs,gts,r=1,c=1)
+# imgs,gts = random_sample_GT(lbl="/home/jim/AI/ocr1/labels1.txt")
+# showImgs_code(imgs,gts,r=1,c=1)
+
+# C. Single Image
+
+# 1. folder Argument.
+# showImg("images")
+# 2. jpg path Argument.
+showImg("images/UBGfuF.png")
+
+# 3. jpg path Argument.
+showImg("images/UBGfuF.png")
 
