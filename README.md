@@ -84,7 +84,7 @@ or [run] python train.py --cfg lib/config/OWN_config.yaml
 
 ## Demo
 ```angular2html
-   [run] python demo.py --image_path images/test.png --checkpoints output/checkpoints/a.pth
+   [run] python demo.py --image_path images/test.png --checkpoint output/checkpoints/a.pth
 ```
 ## References
 - https://arxiv.org/pdf/1507.05717v1.pdf
